@@ -5,7 +5,6 @@ local HttpService = game:GetService("HttpService")
 
 local Secret = "SuperSecretKey"
 
--- Send the login request
 local Response = request({
 	Url = "http://127.0.0.1:8080/login",
 	Method = "POST",
@@ -18,22 +17,20 @@ local Response = request({
 	}
 })
 
--- Handle the response
 if (Response.StatusCode == 200) then
 	local ResponseBody = HttpService:JSONDecode(Response.Body)
 	local ResponseSignature = ResponseBody["Signature"]
 	ResponseBody["Signature"] = nil
 
-	-- Verify the signature
 	local Signature = crypt.hash(Username .. ":" .. Password .. ":" .. Secret .. ":" .. string.gsub(HttpService:JSONEncode(ResponseBody), "%s+", ""), "sha256")
 	
-	if (ResponseSignature == Signature) then
+	if (ResponseSignature == Signature and ResponseBody.Success == true) then
 		print("[SYSTEM] You have logged in successfully!")
 	else 	
 		print("[SYSTEM] Tampering detected.")
 	end
 
-elseif (Response.StatusCode == 401) then -- Invalid credentials
+elseif (Response.StatusCode == 401) then
 	print("[SYSTEM] Invalid credentials.")
 else
 	print("[SYSTEM] Unknown error occurred.")
