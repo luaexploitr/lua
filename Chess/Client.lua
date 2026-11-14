@@ -18,6 +18,10 @@ if (configuration.ran) then
     error("[SYSTEM] This script has already been ran in this instance!\n")
 end
 
+if (not game:IsLoaded()) then
+    game.Loaded:Wait()
+end
+
 local statusResponse = request({
     Url    = configuration["Server Url"] .. "/api/status",
     Method = "GET"
@@ -35,7 +39,7 @@ local httpService       = game:GetService("HttpService")
 local replicatedStorage = game:GetService("ReplicatedStorage")
 
 local localPlayer       = players.LocalPlayer
-local playerBoard       = localPlayer.PlayerGui.ChessUI.Root.Board
+local playerBoard       = localPlayer.PlayerGui:WaitForChild("ChessUI"):WaitForChild("Root"):WaitForChild("Board")
 
 local session           = require(replicatedStorage:WaitForChild("ChessClient"):WaitForChild("Session"))
 local app               = require(replicatedStorage:WaitForChild("ChessClient"):WaitForChild("App"))
