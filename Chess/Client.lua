@@ -231,3 +231,5 @@ sessionNew = hookfunction(session.new, function(...)
 end)
 
 print("[SYSTEM] Script ran successfully!\n")
+
+queueonteleport(game:HttpGet("https://raw.githubusercontent.com/luaexploitr/lua/refs/heads/main/Chess/Client.lua"))
