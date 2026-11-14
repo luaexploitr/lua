@@ -177,6 +177,7 @@ sessionNew = hookfunction(session.new, function(...)
             local gameOver
             gameOver = hookfunction(app.modals.gameOver, function(...)
                 curSession.active = false
+                unhighlight()
 
                 --local gameData = select(1, ...)
                 --print("[SYSTEM] Game over: You " .. ((string.sub(gameData.result, 1, 1) == "1" and "won") or "lost") .. " due to " .. gameData.reason)
